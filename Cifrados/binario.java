@@ -46,7 +46,7 @@ public class binario {
         return binario.toString();
     }
 
-    // Método auxiliar para convertir un binario (8 bits) a carácter usando divisiones
+    // Este seria un metodo auxiliar para convertir un binario (8 bits) a carácter usando divisiones
     private static char convertirBinarioAChar(String binario) {
         int valor = 0;
 
