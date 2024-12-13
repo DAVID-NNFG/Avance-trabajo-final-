@@ -1,48 +1,60 @@
 package util;
 
 public class binario {
-    // Método para convertir texto a binario
-    public String convertirTextoABinario(String texto) {
-        String binario = "";
-        for (int i = 0; i < texto.length(); i++) {
-            char caracter = texto.charAt(i);
-            String binarioChar = convertirCharABinario(caracter);
-            binario += binarioChar;
+
+    // Método para convertir texto a binario usando divisiones
+    public static String convertirTextoABinario(String texto) {
+        StringBuilder binario = new StringBuilder();
+
+        for (char caracter : texto.toCharArray()) {
+            String binChar = convertirCharABinario(caracter);
+            binario.append(binChar).append(" ");
         }
-        return binario;
+
+        return binario.toString().trim();
     }
 
-    // Método para convertir binario a texto
-    public String convertirBinarioATexto(String binario) {
-        String texto = "";
-        int i = 0;
-        while (i < binario.length()) {
-            String byteBinario = "";
-            for (int j = 0; j < 8; j++) {
-                byteBinario += binario.charAt(i++);
-            }
+    // Método para convertir binario a texto usando divisiones
+    public static String convertirBinarioATexto(String binario) {
+        StringBuilder texto = new StringBuilder();
+
+        String[] bytes = binario.split(" "); // Dividir el binario en bloques de 8 bits
+        for (String byteBinario : bytes) {
             char caracter = convertirBinarioAChar(byteBinario);
-            texto += caracter;
+            texto.append(caracter);
         }
-        return texto;
+
+        return texto.toString();
     }
 
-    // Método auxiliar para convertir un carácter a binario
-    private String convertirCharABinario(char caracter) {
+    // Método auxiliar para convertir un carácter a binario usando divisiones
+    private static String convertirCharABinario(char caracter) {
         int ascii = (int) caracter;
-        String binario = "";
-        for (int i = 7; i >= 0; i--) {
-            binario += (ascii & (1 << i)) != 0 ? "1" : "0";
+        StringBuilder binario = new StringBuilder();
+
+        // Dividir iterativamente entre 2 y almacenar los residuos
+        while (ascii > 0) {
+            binario.insert(0, ascii % 2);
+            ascii /= 2;
         }
-        return binario;
+
+        // Asegurar que el resultado tenga 8 bits
+        while (binario.length() < 8) {
+            binario.insert(0, "0");
+        }
+
+        return binario.toString();
     }
 
-    // Método auxiliar para convertir un binario (8 bits) a carácter
-    private char convertirBinarioAChar(String binario) {
+    // Método auxiliar para convertir un binario (8 bits) a carácter usando divisiones
+    private static char convertirBinarioAChar(String binario) {
         int valor = 0;
-        for (int i = 0; i < 8; i++) {
-            valor = (valor << 1) + (binario.charAt(i) - '0');
+
+        // Convertir el binario a su valor decimal
+        for (int i = 0; i < binario.length(); i++) {
+            valor = valor * 2 + (binario.charAt(i) - '0');
         }
+
         return (char) valor;
     }
 }
