@@ -1,40 +1,42 @@
 import java.util.Scanner;
-public class binario {
+import util.binario;
+
+public class CifradoYDecifrado {
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
-        String texto = sc.nextLine();
-        String textoCifrado = convertirABinario(texto);
-        System.out.println(textoCifrado);
-        
-        sc.close();
-    }
-    
-    // Función para convertir un texto a binario
-    public static String convertirABinario(String texto) {
-        StringBuilder binario = new StringBuilder();
-        
-        // recorrer por cada carácter del texto
-        for (char caracter : texto.toCharArray()) {
-            // Obtener la representación binaria del carácter
-            String bin = Integer.toBinaryString(caracter);
-            
-            // Rellenar con ceros a la izquierda para obtener 8 bits
-            while (bin.length() < 8) {
-                bin = "0" + bin;
+
+        System.out.println("Seleccione una opción:");
+        System.out.println("1. Cifrar texto a binario");
+        System.out.println("2. Descifrar binario a texto");
+        int opcion = sc.nextInt();
+        sc.nextLine(); 
+
+        switch (opcion) {
+            case 1 -> {
+                System.out.println("Ingrese el texto para convertir a binario:");
+                String texto = sc.nextLine();
+                String textoBinario = binario.convertirTextoABinario(texto);
+                System.out.println("Texto en binario: " + textoBinario);
             }
-            
-            // Agregar el binario al resultado
-            binario.append(bin).append(" ");
+
+            case 2 -> {
+                System.out.println("Ingrese el binario para convertir a texto:");
+        String binarioInput = sc.nextLine();
+
+        if (binarioInput.matches("([01]{8}\\s?)+")) {
+            String textoOriginal = binario.convertirBinarioATexto(binarioInput);
+            System.out.println("Texto original: " + textoOriginal);
+        } else {
+            System.out.println("Error: El binario ingresado no es válido.");
         }
         
-        return binario.toString().trim(); 
-    }
 
-    public String binario(String texto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'binario'");
+        sc.close();
     }
+           
+    }      
+  }
 }
 
 
